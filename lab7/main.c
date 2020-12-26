@@ -29,7 +29,7 @@ void *readThread(void *num) {
 }
 
 void *writeThread(void *arg) {
-       	while (count < THREAD_COUNT) {
+       	while (1) {
 		sleep(rand() % 10);
 		pthread_mutex_lock(&mutex);
        		count++; 

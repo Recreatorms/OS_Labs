@@ -26,7 +26,7 @@ void *readThread(void *num) {
 }
 
 void *writeThread(void *arg) {
-	while (count < THREAD_COUNT) {
+	while (1) {
 		sleep(rand() % 10);
 		pthread_rwlock_wrlock(&lock);
 	   	count++;
