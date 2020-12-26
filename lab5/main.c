@@ -1,36 +1,40 @@
 #include <pthread.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <unistd.h>
-#include <stdbool.h>
-#define THREAD_COUNT 10
-pthread_mutex_t mutex;
+#include <signal.h>
 
+#define THREAD_COUNT 10
+
+pthread_mutex_t mutex;
 int count = 0;
-//bool active = true;
+
+void programExit(int sig) {
+	printf("\n");
+	exit(0);
+}
 void *readThread(void *num) {
 	while (1) {
 		pthread_mutex_lock(&mutex);
 		printf("Thread #%d | TID =  %lx | Count = %d\n", 
 					*(int *)num, (long)pthread_self(), count);
 		pthread_mutex_unlock(&mutex);    
-		if (count == THREAD_COUNT)
-			pthread_exit(0);	    
 		sleep(1);
 	}
 }
 
 void *writeThread(void *arg) {
-	while (count < THREAD_COUNT) {
+	while (1) {
 		pthread_mutex_lock(&mutex);
 		count++;
 		printf("Count = %d\n", count);
 		pthread_mutex_unlock(&mutex);
 		sleep(rand() % 10);  
 	}
-	pthread_exit(0);
 }
 
 int main() {
+	signal(SIGINT, programExit);
 	pthread_t threads[THREAD_COUNT + 1];
 	int threadArr[THREAD_COUNT];
 	pthread_mutex_init(&mutex, NULL);

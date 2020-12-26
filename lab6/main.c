@@ -2,11 +2,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <signal.h>
 
 #define THREAD_COUNT 10
 
 pthread_rwlock_t lock;
 int count = 0;
+
+void programExit(int sig) {
+	printf("\n");
+	exit(0);
+}
 
 void *readThread(void *num) {
 	while (1) {
@@ -14,8 +20,6 @@ void *readThread(void *num) {
 	        printf("Thread #%d | TID = %lx | Count = %d\n",
 		       	*(int*)num, (long)pthread_self(), count);
     	
-		if (count == THREAD_COUNT) 
-			pthread_exit(0);
 		pthread_rwlock_unlock(&lock);
 		sleep(1);
   	}
@@ -30,10 +34,10 @@ void *writeThread(void *arg) {
 	 	sleep(rand() % 10);
 	   	pthread_rwlock_unlock(&lock);
   	}
-	pthread_exit(0);
 }
 
 int main() {
+	signal(SIGINT, programExit);
 	pthread_t threads[THREAD_COUNT + 1];
 	int threadArr[THREAD_COUNT];
 
