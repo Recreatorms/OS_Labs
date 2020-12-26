@@ -25,19 +25,19 @@ int main() {
     
     shmem_id = shmget(IPCkey, 32, 0666);
     if (shmem_id == -1) {
-	printf("shmem id errno:%d\n", errno);
+	perror("shmem id errno:%d\n");
 	exit(0);
     }
 
     semid = semget(semkey, 1, 0666);
     if (semid == -1) {
-	printf("Semaphore open error");
+	perror("Semaphore open error");
 	exit(0);
     }
 
 
     if ((addr = shmat(shmem_id, NULL, 0)) == (char *)-1) {
-	printf("SharedMemory link error\n");
+	perror("SharedMemory link error\n");
         exit(0);
     }
 

@@ -12,7 +12,7 @@ void getAtexitPid() {
 void forkProcess(pid_t pid) {
     switch(pid) {
         case -1: 
-            printf("Fork error\n");
+            perror("Fork error\n");
             break;
         case 0:
             printf("Child:\n");
@@ -30,7 +30,7 @@ void forkProcess(pid_t pid) {
 int main() {
     printf("Started main\n PID in main: \t\t%x\n PPID in main: \t\t%x\n", getpid(), getppid());
     if (atexit(getAtexitPid)) 
-	    printf("error"); 
+	    perror("error"); 
     pid_t pid = fork();
     forkProcess(pid);
     return 0;

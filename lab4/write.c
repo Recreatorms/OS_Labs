@@ -31,11 +31,11 @@ int main(int argc, char* argv[]) {
     shm_id = shmget(IPCkey, 32, IPC_CREAT | 0666);
     semid = semget(semkey, 1, IPC_CREAT | 0666);
     if (shm_id == -1) {
-        printf("Can't create shared memory\n");
+        perror("Can't create shared memory\n");
         exit(0);
     }
     if (semid == -1) {
-    	printf("Semaphore create error\n");
+    	perror("Semaphore create error\n");
 	exit(0);
     }
 
@@ -43,7 +43,7 @@ int main(int argc, char* argv[]) {
     
 
     if ((addr = shmat(shm_id, NULL, 0)) == (char *)-1) {
-        printf("shmat error\n");
+        perror("shmat error\n");
         exit(0);
     }
 

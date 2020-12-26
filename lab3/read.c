@@ -21,19 +21,19 @@ int shmem_id;
 int main() {
     key_t IPCkey = ftok(FILE, 1);
     if (IPCkey == -1) {
-        printf("IPCkey error\n");
+        perror("IPCkey error\n");
         exit(0);
     }
 
     shmem_id = shmget(IPCkey, sizeof(shmem_value), IPC_EXCL | 0666);
     if (shmem_id == -1) {
-        printf("shmem id errno:%d\n", errno);
+        perror("shmem id errno:%d\n");
         exit(0);
     }
 
     shmem_value *received_value = (shmem_value *) shmat(shmem_id, NULL, 0);
     if (received_value == (shmem_value *)-1) {
-        printf("SharedMemory link error\n");
+        perror("SharedMemory link error\n");
         exit(0);
     }
 
