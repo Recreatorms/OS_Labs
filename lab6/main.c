@@ -23,10 +23,11 @@ void *readThread(void *num) {
 
 void *writeThread(void *arg) {
 	while (count < THREAD_COUNT) {
+		sleep(rand() % 10);
 		pthread_rwlock_wrlock(&lock);
 	   	count++;
 		printf("Count = %d\n", count);
-	 	sleep(1);
+	 	sleep(rand() % 10);
 	   	pthread_rwlock_unlock(&lock);
   	}
 	pthread_exit(0);

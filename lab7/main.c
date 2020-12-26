@@ -16,8 +16,8 @@ void *readThread(void *num) {
         	printf("Thread #%d | TID = %lx | Count = %d\n",
                         	*(int *)num, (long)pthread_self(), count);
 
-		sleep(1);	
 		pthread_mutex_unlock(&mutex);
+		sleep(1);	
 		
       		if (count == THREAD_COUNT) 
 			pthread_exit(0);
@@ -26,11 +26,12 @@ void *readThread(void *num) {
 
 void *writeThread(void *arg) {
        	while (count < THREAD_COUNT) {
+		sleep(rand() % 10);
 		pthread_mutex_lock(&mutex);
        		count++; 
 		printf("Count = %d\n", count);
 		pthread_cond_broadcast(&condition);
-       		sleep(1);
+       		sleep(rand() % 10);
 		pthread_mutex_unlock(&mutex);
        	}
 	pthread_exit(0);

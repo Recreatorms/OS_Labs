@@ -31,7 +31,7 @@ int main() {
     printf("Started main\n PID in main: \t\t%x\n PPID in main: \t\t%x\n", getpid(), getppid());
     if (atexit(getAtexitPid)) { 
 	    perror("error"); 
-    	exit(0);
+    	    exit(0);
     }
     pid_t pid = fork();
     forkProcess(pid);

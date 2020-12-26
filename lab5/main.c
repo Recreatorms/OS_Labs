@@ -25,7 +25,7 @@ void *writeThread(void *arg) {
 		count++;
 		printf("Count = %d\n", count);
 		pthread_mutex_unlock(&mutex);
-		sleep(1);  
+		sleep(rand() % 10);  
 	}
 	pthread_exit(0);
 }
