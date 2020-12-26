@@ -34,8 +34,11 @@ void *writeThread(void *arg) {
 		pthread_mutex_lock(&mutex);
        		count++; 
 		printf("Count = %d\n", count);
-		pthread_cond_broadcast(&condition);
-       		sleep(rand() % 10);
+		if (rand() % 2 == 0)
+			pthread_cond_broadcast(&condition);
+		else 
+			pthread_cond_signal(&condition);
+		sleep(rand() % 10);
 		pthread_mutex_unlock(&mutex);
        	}
 }
