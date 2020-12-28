@@ -36,7 +36,7 @@ void myls(struct dirent * dir) {
 	printf((S.st_mode & S_IXOTH) ? "x" : "-");
 
 
-	printf(" %2lu", S.st_nlink);
+	printf(" %2hu", S.st_nlink);
 
 	struct passwd * pwd;
 	pwd = getpwuid(S.st_uid);
